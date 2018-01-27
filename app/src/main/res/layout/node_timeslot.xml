@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?selectableItemBackground"
+    android:padding="16dp">
+
+    <CheckBox
+        android:id="@+id/slot_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:paddingLeft="8dp"
+        android:layout_toRightOf="@id/slot_checkbox"
+        android:layout_centerVertical="true"
+        android:id="@+id/slot_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00 to 01:00"/>
+
+    <ImageView
+        android:id="@+id/slot_status"
+        android:layout_width="16dp"
+        android:layout_centerVertical="true"
+        android:layout_height="16dp"
+        android:background="@android:color/holo_red_dark"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>
