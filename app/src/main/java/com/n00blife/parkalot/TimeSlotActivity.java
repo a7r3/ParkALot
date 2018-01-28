@@ -1,11 +1,19 @@
 package com.n00blife.parkalot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +27,7 @@ import java.util.List;
 public class TimeSlotActivity extends AppCompatActivity {
 
     public static String slotName;
+    private List<TimeSlot> timeSlots;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +42,7 @@ public class TimeSlotActivity extends AppCompatActivity {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Slots");
-        final List<TimeSlot> timeSlots = new ArrayList<>();
+        timeSlots = new ArrayList<>();
         final TimeSlotAdapter adapter = new TimeSlotAdapter(this, timeSlots);
         slotRecycler.setAdapter(adapter);
 
@@ -58,5 +67,33 @@ public class TimeSlotActivity extends AppCompatActivity {
                 }
             });
         }
+
+        Button proceedButton = findViewById(R.id.proceed_button);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for(TimeSlot timeSlot : timeSlots) {
+                    if(timeSlot.isSelected()) {
+                        stringBuilder.append(timeSlot.getTimeSlotName()).append(":");
+                    }
+                }
+                if(stringBuilder.toString().isEmpty()) {
+                    Toast.makeText(TimeSlotActivity.this, "Select a time slot to continue", Toast.LENGTH_LONG).show();
+                    return;
+                } else {
+                    Log.d("SLOTS", stringBuilder.toString());
+                    Intent intent = new Intent(TimeSlotActivity.this, PaymentActivity.class);
+                    intent.putExtra("SLOTS", stringBuilder.toString());
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

@@ -21,6 +21,9 @@
         <activity android:name=".LoginActivity"/>
         <activity android:name=".ParkingActivity"/>
         <activity android:name=".TimeSlotActivity"/>
+        <activity android:name=".PaymentActivity"/>
+        <activity android:name=".BookedSlotActivity"/>
+        <activity android:name=".BookedSlotViewerActivity"/>
     </application>
 
 </manifest>
